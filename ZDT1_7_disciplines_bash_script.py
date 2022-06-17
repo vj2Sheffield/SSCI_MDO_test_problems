@@ -69,13 +69,20 @@ y7_dummy = np.ones((n_y7, 1))
 d1Matrices = np.zeros((14, 4))
 b1Matrices = np.zeros((14, 2))
 
-bArray = np.array([[ 1,  4],
-       [ 3,  1],
-       [ 2,  2],
-       [ 5,  6],
-       [ 9,  4],
-       [ 8, 10],
-       [ 2,  4]])
+bArray = np.array([[ 7,  2],
+       [ 3,  3],
+       [ 4,  5],
+       [ 9,  8],
+       [ 1,  2],
+       [ 1,  9],
+       [ 3,  6],
+       [ 2,  1],
+       [ 2,  6],
+       [ 3, 10],
+       [ 8,  6],
+       [ 2,  7],
+       [ 4, 10],
+       [10,  4]])
 
 dArray = np.array([[ 7,  2,  9,  5],
        [ 6,  5,  5,  7],
@@ -104,31 +111,31 @@ d1Matrices = np.concatenate((b1Matrices, d1Matrices), axis = 1)
 
 B1 = d1Matrices[0:2, 0:2]
 D1 = d1Matrices[0:2, 2:4]
-C1 = d1Matrices[0:2, 4:6]
+C1 = d1Matrices[0:2, 4:6 - 1]
 
 B2 = d1Matrices[2:4, 0:2]
 D2 = d1Matrices[2:4, 2:4]
-C2 = d1Matrices[2:4, 4:6]
+C2 = d1Matrices[2:4, 4:6 - 1]
 
 B3 = d1Matrices[4:6, 0:2]
 D3 = d1Matrices[4:6, 2:4]
-C3 = d1Matrices[4:6, 4:6]
+C3 = d1Matrices[4:6, 4:6 - 1]
 
 B4 = d1Matrices[6:8, 0:2]
 D4 = d1Matrices[6:8, 2:4]
-C4 = d1Matrices[6:8, 4:6]
+C4 = d1Matrices[6:8, 4:6 - 1]
 
 B5 = d1Matrices[8:10, 0:2]
 D5 = d1Matrices[8:10, 2:4]
-C5 = d1Matrices[8:10, 4:6]
+C5 = d1Matrices[8:10, 4:6 - 1]
 
 B6 = d1Matrices[10:12, 0:2]
 D6 = d1Matrices[10:12, 2:4]
-C6 = d1Matrices[10:12, 4:6]
+C6 = d1Matrices[10:12, 4:6 - 1]
 
 B7 = d1Matrices[12:14, 0:2]
 D7 = d1Matrices[12:14, 2:4]
-C7 = d1Matrices[12:14, 4:6]
+C7 = d1Matrices[12:14, 4:6 - 1]
 
 
 class disc1(om.ExplicitComponent):
@@ -147,7 +154,7 @@ class disc1(om.ExplicitComponent):
 		x1 = inputs["x1"]
 		y7 = inputs["y7"]
         
-		Cz = np.reshape(np.matmul(C1, z), [C1.shape[0], 1])
+		Cz = np.reshape(np.matmul(C1, z[1:2]), [C1.shape[0], 1])
 		Dx = np.matmul(D1, x1)
 		B1y = np.matmul(B1, y7)
         
@@ -169,7 +176,7 @@ class disc2(om.ExplicitComponent):
 		x2 = inputs["x2"]
 		y1 = inputs["y1"]
         
-		Cz = np.reshape(np.matmul(C2, z), [C2.shape[0], 1])
+		Cz = np.reshape(np.matmul(C2, z[1:2]), [C2.shape[0], 1])
 		Dx = np.matmul(D2, x2)
 		B1y = np.matmul(B2, y1)
         
@@ -191,7 +198,7 @@ class disc3(om.ExplicitComponent):
 		x3 = inputs["x3"]
 		y2 = inputs["y2"]
         
-		Cz = np.reshape(np.matmul(C3, z), [C3.shape[0], 1])
+		Cz = np.reshape(np.matmul(C3, z[1:2]), [C3.shape[0], 1])
 		Dx = np.matmul(D3, x3)
 		B1y = np.matmul(B3, y2)
         
@@ -213,7 +220,7 @@ class disc4(om.ExplicitComponent):
 		x4 = inputs["x4"]
 		y3 = inputs["y3"]
         
-		Cz = np.reshape(np.matmul(C4, z), [C4.shape[0], 1])
+		Cz = np.reshape(np.matmul(C4, z[1:2]), [C4.shape[0], 1])
 		Dx = np.matmul(D4, x4)
 		B1y = np.matmul(B4, y3)
         
@@ -235,7 +242,7 @@ class disc5(om.ExplicitComponent):
 		x5 = inputs["x5"]
 		y4 = inputs["y4"]
         
-		Cz = np.reshape(np.matmul(C5, z), [C5.shape[0], 1])
+		Cz = np.reshape(np.matmul(C5, z[1:2]), [C5.shape[0], 1])
 		Dx = np.matmul(D5, x5)
 		B1y = np.matmul(B5, y4)
         
@@ -257,7 +264,7 @@ class disc6(om.ExplicitComponent):
 		x6 = inputs["x6"]
 		y5 = inputs["y5"]
         
-		Cz = np.reshape(np.matmul(C6, z), [C6.shape[0], 1])
+		Cz = np.reshape(np.matmul(C6, z[1:2]), [C6.shape[0], 1])
 		Dx = np.matmul(D6, x6)
 		B1y = np.matmul(B6, y5)
         
@@ -279,7 +286,7 @@ class disc7(om.ExplicitComponent):
 		x7 = inputs["x7"]
 		y6 = inputs["y6"]
         
-		Cz = np.reshape(np.matmul(C7, z), [C7.shape[0], 1])
+		Cz = np.reshape(np.matmul(C7, z[1:2]), [C7.shape[0], 1])
 		Dx = np.matmul(D7, x7)
 		B1y = np.matmul(B7, y6)
         

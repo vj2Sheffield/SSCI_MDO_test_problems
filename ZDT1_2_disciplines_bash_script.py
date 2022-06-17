@@ -15,6 +15,7 @@ import sys
 
 i = sys.argv[1]
 print('******************************' + str(sys.argv[1]) + '******************************')
+
 path = "[Run " + str(i) + "] DV 2 disciplines"
 
 # Start timer
@@ -82,11 +83,11 @@ d1Matrices = np.concatenate((b1Matrices, d1Matrices), axis = 1)
 
 B12 = d1Matrices[0:5, 0:5]
 D1 = d1Matrices[0:5, 5:10]
-C1 = d1Matrices[0:5, 10:20]
+C1 = d1Matrices[0:5, 10:19]
 
 B21 = d1Matrices[5:10, 0:5]
 D2 = d1Matrices[5:10, 5:10]
-C2 = d1Matrices[5:10, 10:20]
+C2 = d1Matrices[5:10, 10:19]
 
 class disc1(om.ExplicitComponent):
 	def setup(self):
@@ -104,7 +105,7 @@ class disc1(om.ExplicitComponent):
 		x1 = inputs["x1"]
 		y2 = inputs["y2"]
         
-		Cz = np.reshape(np.matmul(C1, z), [C1.shape[0], 1])
+		Cz = np.reshape(np.matmul(C1, z[1:10]), [C1.shape[0], 1])
 		Dx = np.matmul(D1, x1)
 		B1y = np.matmul(B12, y2)
         
@@ -126,7 +127,7 @@ class disc2(om.ExplicitComponent):
 		x2 = inputs["x2"]
 		y1 = inputs["y1"]
         
-		Cz = np.reshape(np.matmul(C2, z), [C2.shape[0], 1])
+		Cz = np.reshape(np.matmul(C2, z[1:10]), [C2.shape[0], 1])
 		Dx = np.matmul(D2, x2)
 		B2y = np.matmul(B21, y1)
         

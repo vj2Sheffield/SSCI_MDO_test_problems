@@ -41,17 +41,34 @@ y_dummy = np.ones((n_y1, 1))
 d1Matrices = np.zeros((N*n_x1, n_x1 + n_z))
 b1Matrices = np.zeros((N*n_x1, n_y1))
 
-dArray = np.array([[1, 4, 7],
-           [9, 1, 2],
-           [3, 1, 6],
-           [8, 6, 2],
-           [8, 6, 6],
-           [5, 9, 3],
-           [4, 2, 1],
-           [5, 6, 1],
-           [8, 6, 6],
-           [9, 3, 5]])
-bArray = np.array([[1,  2,  2,  1,  8,  9,  3,  9,  1,  6, 10,  2,  4,  9]])
+dArray = np.array([[ 7,  1,  5],
+       [10,  5,  5],
+       [ 4,  7,  3],
+       [10,  4,  2],
+       [ 9,  8,  4],
+       [ 5,  7,  5],
+       [ 2,  7,  1],
+       [ 9,  4,  2],
+       [10,  1,  9],
+       [ 2,  3,  2],
+       [ 7,  8, 10],
+       [ 7,  1,  7],
+       [ 2,  3, 10],
+       [ 5,  5,  5]])
+bArray = np.array([[10],
+       [ 7],
+       [ 9],
+       [ 2],
+       [ 9],
+       [ 9],
+       [ 5],
+       [ 2],
+       [ 8],
+       [ 8],
+       [ 7],
+       [ 5],
+       [ 7],
+       [ 6]])
 
 # A and D arrays..
 for i in range(0, N*n_x1):
@@ -64,59 +81,59 @@ for i in range(0, N*n_x1):
 d1Matrices = np.concatenate((b1Matrices, d1Matrices), axis = 1)
 
 B1 = d1Matrices[0, 0]
-C1 = d1Matrices[0, 1:3]
+C1 = d1Matrices[0, 1:2]
 D1 = d1Matrices[0, 3]
 
 B2 = d1Matrices[1, 0]
-C2 = d1Matrices[1, 1:3]
+C2 = d1Matrices[1, 1:2]
 D2 = d1Matrices[1, 3]
 
 B3 = d1Matrices[2, 0]
-C3 = d1Matrices[2, 1:3]
+C3 = d1Matrices[2, 1:2]
 D3 = d1Matrices[2, 3]
 
 B4 = d1Matrices[3, 0]
-C4 = d1Matrices[3, 1:3]
+C4 = d1Matrices[3, 1:2]
 D4 = d1Matrices[3, 3]
 
 B5 = d1Matrices[4, 0]
-C5 = d1Matrices[4, 1:3]
+C5 = d1Matrices[4, 1:2]
 D5 = d1Matrices[4, 3]
 
 B6 = d1Matrices[5, 0]
-C6 = d1Matrices[5, 1:3]
+C6 = d1Matrices[5, 1:2]
 D6 = d1Matrices[5, 3]
 
 B7 = d1Matrices[6, 0]
-C7 = d1Matrices[6, 1:3]
+C7 = d1Matrices[6, 1:2]
 D7 = d1Matrices[6, 3]
 
 B8 = d1Matrices[7, 0]
-C8 = d1Matrices[7, 1:3]
+C8 = d1Matrices[7, 1:2]
 D8 = d1Matrices[7, 3]
 
 B9 = d1Matrices[8, 0]
-C9 = d1Matrices[8, 1:3]
+C9 = d1Matrices[8, 1:2]
 D9 = d1Matrices[8, 3]
 
 B10 = d1Matrices[9, 0]
-C10 = d1Matrices[9, 1:3]
+C10 = d1Matrices[9, 1:2]
 D10 = d1Matrices[9, 3]
 
 B11 = d1Matrices[10, 0]
-C11 = d1Matrices[10, 1:3]
+C11 = d1Matrices[10, 1:2]
 D11 = d1Matrices[10, 3]
 
 B12 = d1Matrices[11, 0]
-C12 = d1Matrices[11, 1:3]
+C12 = d1Matrices[11, 1:2]
 D12 = d1Matrices[11, 3]
 
 B13 = d1Matrices[12, 0]
-C13 = d1Matrices[12, 1:3]
+C13 = d1Matrices[12, 1:2]
 D13 = d1Matrices[12, 3]
 
 B14 = d1Matrices[13, 0]
-C14 = d1Matrices[13, 1:3]
+C14 = d1Matrices[13, 1:2]
 D14 = d1Matrices[13, 3]
 
 
@@ -136,7 +153,7 @@ class disc1(om.ExplicitComponent):
 		x1 = inputs["x1"]
 		y14 = inputs["y14"]
         
-		outputs["y1"] = -D1*x1 - np.matmul(C1, z) + B1*y14
+		outputs["y1"] = -D1*x1 - np.matmul(C1, z[1:2]) + B1*y14
 
 class disc2(om.ExplicitComponent):
 	def setup(self):
@@ -154,7 +171,7 @@ class disc2(om.ExplicitComponent):
 		x2 = inputs["x2"]
 		y1 = inputs["y1"]
         
-		outputs["y2"] = -D2*x2 - np.matmul(C2, z) + B2*y1
+		outputs["y2"] = -D2*x2 - np.matmul(C2, z[1:2]) + B2*y1
         
 class disc3(om.ExplicitComponent):
 	def setup(self):
@@ -172,7 +189,7 @@ class disc3(om.ExplicitComponent):
 		x3 = inputs["x3"]
 		y2 = inputs["y2"]
         
-		outputs["y3"] = -D3*x3 - np.matmul(C3, z) + B3*y2
+		outputs["y3"] = -D3*x3 - np.matmul(C3, z[1:2]) + B3*y2
 
 class disc4(om.ExplicitComponent):
 	def setup(self):
@@ -190,7 +207,7 @@ class disc4(om.ExplicitComponent):
 		x4 = inputs["x4"]
 		y3 = inputs["y3"]
         
-		outputs["y4"] = -D4*x4 - np.matmul(C4, z) + B4*y3
+		outputs["y4"] = -D4*x4 - np.matmul(C4, z[1:2]) + B4*y3
 
 class disc5(om.ExplicitComponent):
 	def setup(self):
@@ -208,7 +225,7 @@ class disc5(om.ExplicitComponent):
 		x = inputs["x5"]
 		y = inputs["y4"]
         
-		outputs["y5"] = -D5*x - np.matmul(C5, z) + B5*y
+		outputs["y5"] = -D5*x - np.matmul(C5, z[1:2]) + B5*y
 
 class disc6(om.ExplicitComponent):
 	def setup(self):
@@ -226,7 +243,7 @@ class disc6(om.ExplicitComponent):
 		x = inputs["x6"]
 		y = inputs["y5"]
         
-		outputs["y6"] = -D6*x - np.matmul(C6, z) + B6*y
+		outputs["y6"] = -D6*x - np.matmul(C6, z[1:2]) + B6*y
 
 class disc7(om.ExplicitComponent):
 	def setup(self):
@@ -244,7 +261,7 @@ class disc7(om.ExplicitComponent):
 		x = inputs["x7"]
 		y = inputs["y6"]
         
-		outputs["y7"] = -D7*x - np.matmul(C7, z) + B7*y
+		outputs["y7"] = -D7*x - np.matmul(C7, z[1:2]) + B7*y
 
 class disc8(om.ExplicitComponent):
 	def setup(self):
@@ -262,7 +279,7 @@ class disc8(om.ExplicitComponent):
 		x = inputs["x8"]
 		y = inputs["y7"]
         
-		outputs["y8"] = -D8*x - np.matmul(C8, z) + B8*y
+		outputs["y8"] = -D8*x - np.matmul(C8, z[1:2]) + B8*y
 
 class disc9(om.ExplicitComponent):
 	def setup(self):
@@ -280,7 +297,7 @@ class disc9(om.ExplicitComponent):
 		x = inputs["x9"]
 		y = inputs["y8"]
         
-		outputs["y9"] = -D9*x - np.matmul(C9, z) + B9*y
+		outputs["y9"] = -D9*x - np.matmul(C9, z[1:2]) + B9*y
 
 class disc10(om.ExplicitComponent):
 	def setup(self):
@@ -298,7 +315,7 @@ class disc10(om.ExplicitComponent):
 		x = inputs["x10"]
 		y = inputs["y9"]
         
-		outputs["y10"] = -D10*x - np.matmul(C10, z) + B10*y
+		outputs["y10"] = -D10*x - np.matmul(C10, z[1:2]) + B10*y
 
 class disc11(om.ExplicitComponent):
 	def setup(self):
@@ -316,7 +333,7 @@ class disc11(om.ExplicitComponent):
 		x = inputs["x11"]
 		y = inputs["y10"]
         
-		outputs["y11"] = -D11*x - np.matmul(C11, z) + B11*y
+		outputs["y11"] = -D11*x - np.matmul(C11, z[1:2]) + B11*y
 
 class disc12(om.ExplicitComponent):
 	def setup(self):
@@ -334,7 +351,7 @@ class disc12(om.ExplicitComponent):
 		x = inputs["x12"]
 		y = inputs["y11"]
         
-		outputs["y12"] = -D12*x - np.matmul(C12, z) + B12*y
+		outputs["y12"] = -D12*x - np.matmul(C12, z[1:2]) + B12*y
 
 class disc13(om.ExplicitComponent):
 	def setup(self):
@@ -352,7 +369,7 @@ class disc13(om.ExplicitComponent):
 		x = inputs["x13"]
 		y = inputs["y12"]
         
-		outputs["y13"] = -D13*x - np.matmul(C13, z) + B13*y
+		outputs["y13"] = -D13*x - np.matmul(C13, z[1:2]) + B13*y
 
 class disc14(om.ExplicitComponent):
 	def setup(self):
@@ -370,7 +387,7 @@ class disc14(om.ExplicitComponent):
 		x14 = inputs["x14"]
 		y = inputs["y13"]
         
-		outputs["y14"] = -D14*x14 - np.matmul(C14, z) + B14*y
+		outputs["y14"] = -D14*x14 - np.matmul(C14, z[1:2]) + B14*y
 
 class MDA(om.Group):
 	def setup(self):
